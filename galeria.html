@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Graduación CAFE</title>
+    <style>
+        /* ===== CONFIGURACIÓN GENERAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* COLORES - Puedes cambiarlos aquí */
+            --color-lila: #9b7ebf;
+            --color-lila-oscuro: #7a5fa3;
+            --color-lila-claro: #c5a9dd;
+            --color-cafe: #8b6f47;
+            --color-cafe-claro: #b89968;
+            --color-fondo: #fef9f5;
+            --color-crema: #fff5e6;
+            --color-texto: #4a4a4a;
+            --color-blanco: #ffffff;
+            --color-amarillo: #ffd966;
+            --color-rosa: #ffb6c1;
+            --color-verde: #a8d5ba;
+            --color-azul: #b8d4f1;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Segoe UI', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, var(--color-lila) 0%, var(--color-cafe-claro) 50%, var(--color-lila-claro) 100%);
+            min-height: 100vh;
+            padding: 20px 10px;
+            color: var(--color-texto);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== PATRÓN DE FONDO CON ÍCONOS ESCOLARES ===== */
+        body::before {
+            content: '📸 🎓 ✨ 📚 ✏️ 🔢 🔤 📸 🎓 ✨ 📚 ✏️ 🔢 🔤 📸 🎓 ✨';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            font-size: 2.5em;
+            opacity: 0.06;
+            line-height: 2.5;
+            word-spacing: 40px;
+            pointer-events: none;
+            z-index: 0;
+            animation: patternSlide 80s linear infinite;
+        }
+
+        @keyframes patternSlide {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ===== PARTÍCULAS DECORATIVAS ===== */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle::before {
+            content: '✨';
+            font-size: 2em;
+            opacity: 0;
+            animation: sparkleFloat 7s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFloat {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.9;
+                transform: translateY(-120px) rotate(180deg);
+            }
+
+            75% {
+                opacity: 0.4;
+            }
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: var(--color-fondo);
+            border-radius: 40px;
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 8px var(--color-blanco),
+                inset 0 0 0 12px var(--color-lila-claro);
+            overflow: hidden;
+            animation: fadeInScale 1s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ===== DECORACIONES EN ESQUINAS ===== */
+        .container::before {
+            content: '📸';
+            position: absolute;
+            top: -40px;
+            left: -35px;
+            font-size: 140px;
+            opacity: 0.12;
+            transform: rotate(-20deg);
+            z-index: 1;
+            animation: cameraFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes cameraFloat {
+
+            0%,
+            100% {
+                transform: rotate(-20deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(-25deg) translateY(-15px);
+            }
+        }
+
+        .container::after {
+            content: '🎓';
+            position: absolute;
+            bottom: -45px;
+            right: -40px;
+            font-size: 160px;
+            opacity: 0.11;
+            transform: rotate(30deg);
+            z-index: 1;
+            animation: hatFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes hatFloat {
+
+            0%,
+            100% {
+                transform: rotate(30deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(25deg) translateY(-20px);
+            }
+        }
+
+        /* ===== CABECERA DECORADA ===== */
+        .gallery-header {
+            background: linear-gradient(135deg, var(--color-lila-oscuro) 0%, var(--color-cafe) 50%, var(--color-lila) 100%);
+            padding: 50px 30px;
+            text-align: center;
+            color: var(--color-blanco);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 6px dashed var(--color-amarillo);
+        }
+
+        /* Decoración superior de la cabecera */
+        .gallery-header::before {
+            content: '📸 ✨ 📸 ✨ 📸 ✨ 📸 ✨ 📸';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 2em;
+            opacity: 0.25;
+            letter-spacing: 40px;
+            animation: slideIcons 20s linear infinite;
+        }
+
+        @keyframes slideIcons {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100px);
+            }
+        }
+
+        /* Decoración inferior de la cabecera */
+        .gallery-header::after {
+            content: '🎓 📚 ✏️ 🎓 📚 ✏️ 🎓 📚 ✏️';
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.8em;
+            opacity: 0.3;
+            letter-spacing: 35px;
+        }
+
+        .gallery-header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow:
+                3px 3px 6px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 60px var(--color-amarillo);
+            animation: slideDown 1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-header p {
+            font-size: 1.5em;
+            opacity: 0.95;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ===== BOTÓN VOLVER DECORADO ===== */
+        .back-button-container {
+            text-align: center;
+            padding: 30px 20px;
+            background:
+                linear-gradient(90deg, transparent 0%, var(--color-crema) 50%, transparent 100%);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--color-cafe) 0%, var(--color-cafe-claro) 100%);
+            color: var(--color-blanco);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.25),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .back-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .back-button:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 40px var(--color-amarillo);
+        }
+
+        /* ===== GALERÍA CON DECORACIÓN ===== */
+        .gallery-section {
+            padding: 40px 30px;
+            position: relative;
+        }
+
+        /* Decoración alrededor de la galería */
+        .gallery-section::before {
+            content: '✏️';
+            position: absolute;
+            top: 30px;
+            left: 20px;
+            font-size: 3em;
+            opacity: 0.2;
+            transform: rotate(-25deg);
+            animation: pencilWiggle 3s ease-in-out infinite;
+        }
+
+        @keyframes pencilWiggle {
+
+            0%,
+            100% {
+                transform: rotate(-25deg);
+            }
+
+            50% {
+                transform: rotate(-30deg);
+            }
+        }
+
+        .gallery-section::after {
+            content: '📚';
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            font-size: 3em;
+            opacity: 0.2;
+            transform: rotate(20deg);
+            animation: bookFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes bookFloat {
+
+            0%,
+            100% {
+                transform: rotate(20deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(25deg) translateY(-10px);
+            }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+
+        /* ===== CADA FOTO CON DECORACIÓN ESPECIAL ===== */
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Borde decorativo con múltiples capas */
+            border: 5px solid transparent;
+            background:
+                linear-gradient(var(--color-fondo), var(--color-fondo)) padding-box,
+                linear-gradient(135deg, var(--color-lila), var(--color-rosa), var(--color-cafe)) border-box;
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.2),
+                inset 0 0 0 3px var(--color-blanco);
+        }
+
+        /* Esquinas decorativas de cada foto */
+        .gallery-item::before {
+            content: '✨';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.5em;
+            opacity: 0;
+            z-index: 10;
+            transition: all 0.3s ease;
+            transform: scale(0) rotate(0deg);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.08) rotate(3deg) translateY(-10px);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.35),
+                0 0 50px var(--color-amarillo),
+                inset 0 0 0 3px var(--color-blanco);
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+            transform: scale(1) rotate(180deg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+
+        /* Overlay decorativo con gradiente y emoji */
+        .gallery-item::after {
+            content: '🎓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 4em;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            text-shadow:
+                0 0 20px var(--color-blanco),
+                0 0 40px var(--color-amarillo);
+            z-index: 5;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 0.9;
+            transform: translate(-50%, -50%) scale(1) rotate(15deg);
+        }
+
+        /* ===== LOADING MEJORADO ===== */
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 1.6em;
+            color: var(--color-lila-oscuro);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border: 6px solid var(--color-lila-claro);
+            border-top-color: var(--color-cafe);
+            border-right-color: var(--color-rosa);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+            margin-bottom: 25px;
+            box-shadow: 0 0 30px rgba(155, 126, 191, 0.4);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ===== MODAL LIGHTBOX MEJORADO ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at center, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95));
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomInBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes zoomInBounce {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 20px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 0 8px var(--color-blanco),
+                0 0 0 12px var(--color-lila-claro),
+                0 0 80px var(--color-amarillo);
+        }
+
+        /* ===== BOTONES DEL MODAL MEJORADOS ===== */
+        .modal-close,
+        .modal-prev,
+        .modal-next {
+            position: fixed;
+            background: linear-gradient(135deg, var(--color-lila), var(--color-cafe-claro));
+            color: var(--color-blanco);
+            border: 3px solid var(--color-blanco);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.4),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            font-weight: bold;
+        }
+
+        .modal-close:hover,
+        .modal-prev:hover,
+        .modal-next:hover {
+            background: linear-gradient(135deg, var(--color-cafe), var(--color-lila-claro));
+            transform: scale(1.15) rotate(10deg);
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.5),
+                0 0 40px var(--color-amarillo);
+        }
+
+        .modal-close {
+            top: 25px;
+            right: 25px;
+        }
+
+        .modal-prev {
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-prev:hover {
+            transform: translateY(-50%) scale(1.15) rotate(-10deg);
+        }
+
+        .modal-next {
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-next:hover {
+            transform: translateY(-50%) scale(1.15) rotate(10deg);
+        }
+
+        /* ===== CONTADOR DE FOTOS DECORADO ===== */
+        .photo-counter {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--color-lila), var(--color-rosa));
+            color: var(--color-blanco);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1001;
+            border: 3px solid var(--color-blanco);
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.4),
+                0 0 30px var(--color-amarillo);
+            animation: counterPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes counterPulse {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 6px 20px rgba(0, 0, 0, 0.4),
+                    0 0 30px var(--color-amarillo);
+            }
+
+            50% {
+                box-shadow:
+                    0 8px 25px rgba(0, 0, 0, 0.5),
+                    0 0 50px var(--color-amarillo);
+            }
+        }
+
+        /* ===== PIE DE PÁGINA DECORADO ===== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--color-lila-oscuro), var(--color-cafe));
+            color: var(--color-blanco);
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '🎓 ✨ 📸 🎓 ✨ 📸 🎓 ✨ 📸 🎓';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            width: 100%;
+            font-size: 2.5em;
+            opacity: 0.15;
+            letter-spacing: 40px;
+        }
+
+        footer p {
+            position: relative;
+            z-index: 2;
+            font-size: 1.3em;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .gallery-header h1 {
+                font-size: 2.3em;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 18px;
+                padding: 20px;
+            }
+
+            .modal-prev,
+            .modal-next,
+            .modal-close {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5em;
+            }
+
+            .photo-counter {
+                font-size: 1em;
+                padding: 10px 20px;
+                bottom: 25px;
+            }
+
+            .sparkle {
+                display: none;
+                /* Ocultar partículas en móviles para mejor rendimiento */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Partículas brillantes decorativas (solo desktop) -->
+    <div class="sparkle" style="top: 15%; left: 10%; animation-delay: 0s;"></div>
+    <div class="sparkle" style="top: 35%; right: 15%; animation-delay: 2s;"></div>
+    <div class="sparkle" style="top: 55%; left: 20%; animation-delay: 4s;"></div>
+    <div class="sparkle" style="top: 75%; right: 25%; animation-delay: 1.5s;"></div>
+    <div class="sparkle" style="top: 25%; left: 75%; animation-delay: 3s;"></div>
+    <div class="sparkle" style="top: 65%; right: 60%; animation-delay: 5s;"></div>
+
+    <div class="container">
+        <!-- CABECERA DECORADA -->
+        <div class="gallery-header">
+            <h1>📸 Galería de Fotos 📸</h1>
+            <p>✨ Nuestros Momentos Especiales ✨</p>
+        </div>
+
+        <!-- BOTÓN VOLVER DECORADO -->
+        <div class="back-button-container">
+            <a href="index.html" class="back-button">
+                ← Volver a la Invitación
+            </a>
+        </div>
+
+        <!-- GALERÍA DE FOTOS DECORADA -->
+        <div class="gallery-section">
+            <!-- Loading spinner mejorado -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>✨ Cargando recuerdos mágicos... ✨</p>
+            </div>
+
+            <!-- Grid de galería (se genera dinámicamente) -->
+            <div class="gallery-grid" id="gallery"></div>
+        </div>
+
+        <!-- PIE DE PÁGINA DECORADO -->
+        <footer>
+            <p>🎓 Promoción CAFE 2025 🎓</p>
+            <p style="margin-top: 10px; opacity: 0.9;">
+                Todos los recuerdos guardados con amor ❤️
+            </p>
+        </footer>
+    </div>
+
+    <!-- MODAL LIGHTBOX MEJORADO -->
+    <div class="modal" id="modal">
+        <button class="modal-close" id="modalClose">✕</button>
+        <button class="modal-prev" id="modalPrev">‹</button>
+        <button class="modal-next" id="modalNext">›</button>
+        <div class="photo-counter" id="photoCounter">1 / 100</div>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Foto ampliada">
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURACIÓN DE LA GALERÍA =====
+        const CONFIG = {
+            imageFolder: './images/',   // Carpeta donde están las imágenes
+            imagePrefix: 'img',         // Prefijo de los archivos (img01.jpg, img02.jpg, etc.)
+            imageFormat: '.jpg',        // Formato de las imágenes (.jpg, .png, etc.)
+            totalImages: 100,           // CAMBIAR AQUÍ: Número total de imágenes
+            lazyLoadThreshold: 50       // Distancia en píxeles para cargar imágenes
+        };
+
+        // ===== VARIABLES GLOBALES =====
+        let currentImageIndex = 0;
+        let imagesLoaded = [];
+
+        // ===== GENERAR GALERÍA DINÁMICAMENTE =====
+        function generateGallery() {
+            const gallery = document.getElementById('gallery');
+            const loading = document.getElementById('loading');
+
+            // Generar cada elemento de la galería
+            for (let i = 1; i <= CONFIG.totalImages; i++) {
+                // Formatear número con ceros a la izquierda (01, 02, 03...)
+                const imageNumber = String(i).padStart(2, '0');
+                const imagePath = `${CONFIG.imageFolder}${CONFIG.imagePrefix}${imageNumber}${CONFIG.imageFormat}`;
+
+                // Crear elemento de galería
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.dataset.index = i - 1;
+
+                // Crear imagen con lazy loading
+                const img = document.createElement('img');
+                img.dataset.src = imagePath; // Usar data-src para lazy loading
+                img.alt = `Foto ${i} - Graduación CAFE`;
+                img.loading = 'lazy'; // Lazy loading nativo del navegador
+
+                // Click para abrir modal
+                item.addEventListener('click', () => openModal(i - 1));
+
+                item.appendChild(img);
+                gallery.appendChild(item);
+
+                // Guardar ruta de imagen
+                imagesLoaded.push(imagePath);
+            }
+
+            // Ocultar loading spinner
+            loading.style.display = 'none';
+
+            // Inicializar lazy loading avanzado
+            initLazyLoad();
+        }
+
+        // ===== LAZY LOADING CON INTERSECTION OBSERVER =====
+        function initLazyLoad() {
+            const images = document.querySelectorAll('.gallery-item img[data-src]');
+
+            // Crear observer para detectar cuando las imágenes entran al viewport
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src; // Cargar imagen
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img); // Dejar de observar esta imagen
+                    }
+                });
+            }, {
+                rootMargin: `${CONFIG.lazyLoadThreshold}px` // Cargar antes de que sea visible
+            });
+
+            // Observar todas las imágenes
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // ===== MODAL LIGHTBOX =====
+        const modal = document.getElementById('modal');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+        const modalPrev = document.getElementById('modalPrev');
+        const modalNext = document.getElementById('modalNext');
+        const photoCounter = document.getElementById('photoCounter');
+
+        // Abrir modal con una foto específica
+        function openModal(index) {
+            currentImageIndex = index;
+            updateModalImage();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restaurar scroll
+        }
+
+        // Actualizar imagen y contador en el modal
+        function updateModalImage() {
+            modalImage.src = imagesLoaded[currentImageIndex];
+            photoCounter.textContent = `${currentImageIndex + 1} / ${imagesLoaded.length}`;
+        }
+
+        // Navegar entre fotos (anterior/siguiente)
+        function navigateModal(direction) {
+            currentImageIndex += direction;
+
+            // Loop circular: volver al inicio o al final
+            if (currentImageIndex < 0) {
+                currentImageIndex = imagesLoaded.length - 1;
+            } else if (currentImageIndex >= imagesLoaded.length) {
+                currentImageIndex = 0;
+            }
+
+            updateModalImage();
+        }
+
+        // ===== EVENT LISTENERS DEL MODAL =====
+        modalClose.addEventListener('click', closeModal);
+        modalPrev.addEventListener('click', () => navigateModal(-1));
+        modalNext.addEventListener('click', () => navigateModal(1));
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') closeModal();
+                if (e.key === 'ArrowLeft') navigateModal(-1);
+                if (e.key === 'ArrowRight') navigateModal(1);
+            }
+        });
+
+        // Cerrar al hacer clic fuera de la imagen
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // ===== INICIALIZAR GALERÍA AL CARGAR LA PÁGINA =====
+        document.addEventListener('DOMContentLoaded', generateGallery);
+
+    </script>
+</body>
+
+</html>
