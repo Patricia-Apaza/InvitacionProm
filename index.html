@@ -1214,26 +1214,22 @@
 
     <script>
         // ===== CUENTA REGRESIVA =====
-        // Fecha del evento: 18 de diciembre de 2025 a las 5:00 PM
         const eventDate = new Date('December 18, 2025 17:00:00').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = eventDate - now;
 
-            // Calcular tiempo restante
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Actualizar elementos HTML
             document.getElementById('days').textContent = String(days).padStart(2, '0');
             document.getElementById('hours').textContent = String(hours).padStart(2, '0');
             document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 
-            // Si la cuenta regresiva termina
             if (distance < 0) {
                 document.querySelector('.countdown-section h3').textContent = '¡Es hoy! 🎉';
                 document.getElementById('days').textContent = '00';
@@ -1243,22 +1239,51 @@
             }
         }
 
-        // Actualizar cada segundo
         setInterval(updateCountdown, 1000);
-        updateCountdown(); // Llamar inmediatamente al cargar
+        updateCountdown();
 
-        // ===== REPRODUCTOR DE MÚSICA =====
+        // ===== REPRODUCTOR DE MÚSICA CON PERSISTENCIA =====
         const audioPlayer = document.getElementById('audioPlayer');
         const playButton = document.getElementById('playButton');
-
         let isPlaying = false;
 
+        // Al cargar la página, verificar si la música debería estar sonando
+        window.addEventListener('DOMContentLoaded', () => {
+            const shouldPlay = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            if (shouldPlay) {
+                audioPlayer.currentTime = savedTime;
+                audioPlayer.play()
+                    .then(() => {
+                        playButton.innerHTML = '⏸️ Pausar';
+                        isPlaying = true;
+                    })
+                    .catch(err => console.log('Reproducción automática bloqueada:', err));
+            }
+        });
+
+        // Guardar estado antes de salir de la página
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('musicPlaying', isPlaying);
+            localStorage.setItem('musicTime', audioPlayer.currentTime);
+        });
+
+        // Actualizar tiempo cada segundo mientras se reproduce
+        audioPlayer.addEventListener('timeupdate', () => {
+            if (isPlaying) {
+                localStorage.setItem('musicTime', audioPlayer.currentTime);
+            }
+        });
+
+        // Botón play/pause
         playButton.addEventListener('click', () => {
             if (!isPlaying) {
                 audioPlayer.play()
                     .then(() => {
                         playButton.innerHTML = '⏸️ Pausar';
                         isPlaying = true;
+                        localStorage.setItem('musicPlaying', 'true');
                     })
                     .catch(error => {
                         console.error('Error al reproducir el audio:', error);
@@ -1268,9 +1293,17 @@
                 audioPlayer.pause();
                 playButton.innerHTML = '▶️ Reproducir';
                 isPlaying = false;
+                localStorage.setItem('musicPlaying', 'false');
             }
         });
 
+        // Cuando la música termina
+        audioPlayer.addEventListener('ended', () => {
+            playButton.innerHTML = '▶️ Reproducir';
+            isPlaying = false;
+            localStorage.setItem('musicPlaying', 'false');
+            localStorage.setItem('musicTime', '0');
+        });
     </script>
 
 </body>

@@ -738,12 +738,56 @@
     </div>
 
     <script>
+        // ===== CONTINUIDAD DE MÚSICA ENTRE PÁGINAS =====
+        window.addEventListener('DOMContentLoaded', () => {
+            const shouldPlay = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            if (shouldPlay) {
+                // Crear reproductor invisible si la música debe seguir sonando
+                const audioPlayer = document.createElement('audio');
+                audioPlayer.id = 'backgroundAudio';
+                audioPlayer.preload = 'metadata';
+                audioPlayer.volume = 1.0;
+
+                const source = document.createElement('source');
+                source.src = './audio/MORENADA DE LA PROMO CAFE.mp3';
+                source.type = 'audio/mpeg';
+
+                audioPlayer.appendChild(source);
+                document.body.appendChild(audioPlayer);
+
+                // Reproducir desde donde se quedó
+                audioPlayer.currentTime = savedTime;
+                audioPlayer.play()
+                    .then(() => {
+                        console.log('Música continuando automáticamente ✨');
+                    })
+                    .catch(err => console.log('Reproducción automática bloqueada:', err));
+
+                // Actualizar tiempo continuamente
+                audioPlayer.addEventListener('timeupdate', () => {
+                    localStorage.setItem('musicTime', audioPlayer.currentTime);
+                });
+
+                // Si la música termina
+                audioPlayer.addEventListener('ended', () => {
+                    localStorage.setItem('musicPlaying', 'false');
+                    localStorage.setItem('musicTime', '0');
+                });
+
+                // Guardar estado antes de salir
+                window.addEventListener('beforeunload', () => {
+                    localStorage.setItem('musicTime', audioPlayer.currentTime);
+                });
+            }
+        });
         // ===== CONFIGURACIÓN DE LA GALERÍA =====
         const CONFIG = {
             imageFolder: './images/',   // Carpeta donde están las imágenes
             imagePrefix: 'img',         // Prefijo de los archivos (img01.jpg, img02.jpg, etc.)
             imageFormat: '.jpg',        // Formato de las imágenes (.jpg, .png, etc.)
-            totalImages: 100,           // CAMBIAR AQUÍ: Número total de imágenes
+            totalImages: 56,           // CAMBIAR AQUÍ: Número total de imágenes
             lazyLoadThreshold: 50       // Distancia en píxeles para cargar imágenes
         };
 
