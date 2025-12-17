@@ -980,6 +980,93 @@
                 min-width: 100%;
             }
         }
+
+        /* ===== MANO SEÑALADORA EN BORDE DE BOTONES ===== */
+
+        /* Configurar botones para permitir la mano fuera */
+        .play-button,
+        .gallery-cta-button,
+        .action-button {
+            position: relative;
+            overflow: visible;
+            /* 🔥 IMPORTANTE: permite que la mano salga */
+        }
+
+        /* Mano pegada al borde inferior FUERA del botón */
+        .hand-pointer {
+            position: absolute;
+            left: 50%;
+            bottom: -18px;
+            /* 🔥 FUERA del área de contenido */
+            transform: translateX(-50%);
+            font-size: 1.8em;
+            z-index: 10;
+            pointer-events: none;
+            animation: handTapOutside 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Animación suave de tap */
+        @keyframes handTapOutside {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 0.9;
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-3px);
+                opacity: 1;
+            }
+        }
+
+        /* Ajuste para botones más grandes (galería) */
+        .gallery-cta-button .hand-pointer {
+            bottom: -40px;
+            font-size: 2em;
+        }
+
+        /* Ajuste para botón de reproducir */
+        .play-button .hand-pointer {
+            bottom: -25px;
+            font-size: 1.6em;
+        }
+
+        /* Ajuste para botones de acción (más pequeños) */
+        .action-button .hand-pointer {
+            bottom: -22px;
+            font-size: 1.5em;
+        }
+
+        /* Responsive: Ajustes para móviles */
+        @media (max-width: 768px) {
+            .hand-pointer {
+                font-size: 1.5em;
+                bottom: -16px;
+            }
+
+            .gallery-cta-button .hand-pointer {
+                font-size: 1.7em;
+                bottom: -20px;
+            }
+
+            .play-button .hand-pointer {
+                font-size: 1.4em;
+                bottom: -18px;
+            }
+
+            .action-button .hand-pointer {
+                font-size: 1.3em;
+                bottom: -16px;
+            }
+        }
+
+        /* Espaciado adicional para evitar que la mano se corte */
+        .button-with-hand {
+            margin-bottom: 30px;
+            /* Espacio para la mano */
+        }
     </style>
 </head>
 
@@ -1045,6 +1132,7 @@
                 <h4>🎵 Música de la Celebración</h4>
 
                 <button class="play-button" id="playButton">
+                    <span class="hand-pointer">👆</span>
                     ▶️ Reproducir
                 </button>
 
@@ -1117,6 +1205,7 @@
 <parameter name="new_str">        <!-- ===== BOTÓN DE GALERÍA ===== -->
         <div style="text-align: center; margin: 40px 0;">
             <a href="galeria.html" class="gallery-cta-button">
+                <span class="hand-pointer">👆</span>
                 📸 Fotos de la Promoción
             </a>
             <p class="blessing-text">
@@ -1150,6 +1239,7 @@
                     </p>
                     <a href="https://maps.app.goo.gl/9D1NdmLeVdcYev9WA" target="_blank" class="action-button"
                         style="margin-top: 15px;">
+                        <span class="hand-pointer">👆</span>
                         📍 Ver ubicación
                     </a>
                 </div>
@@ -1176,6 +1266,7 @@
                 todo con el cariño que merecen. ¡Tu presencia es importante para nosotros! 💝
             </p>
             <a href="https://forms.gle/XpG1eorfQifvNxqK9" target="_blank" class="action-button">
+                <span class="hand-pointer">👆</span>
                 📝 Confirmar Asistencia
             </a>
         </div>
